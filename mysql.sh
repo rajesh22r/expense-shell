@@ -27,7 +27,7 @@ validate (){
     fi
 }
 
-echo "script started executing at : $(date)" | tee -a $LOG_FILE
+echo -e "$Y script started executing at : $N $(date)" | tee -a $LOG_FILE
 
 dnf install mysql-server -y &>>$LOG_FILE
 validate $? "installing mysqlserver"
@@ -39,7 +39,7 @@ validate $? "enabling mysql"
 systemctl start mysqld &>>$LOG_FILE
 validate $? "starting mysql"
 
-mysql -h 172.31.47.10 -u root -p ExpenseApp@1 -e 'show databes;'
+mysql -h 172.31.47.10 -u root -pExpenseApp@1 -e 'show databes;'
 if [ $? -ne 0 ]
 then 
   echo "mysql root password is not setup, setting up now" | tee -a $LOG_FILE
