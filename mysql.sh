@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_FOLDER="/var/log/shell-script"
+LOG_FOLDER="/var/log/expense"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 TIMESTAMP=$(date +%Y-%m-%d-%H-%M%S)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME-$TIMESTAMP.log"
@@ -29,23 +29,23 @@ validate (){
 
 echo "script started executing at : $(date)" | tee -a $LOG_FILE
 
-dnf install mysql-server -y
+dnf install mysql-server -y &>>$LOG_FILE
 validate $? "installing mysqlserver"
 
 
-systemctl enable mysqld
+systemctl enable mysqld &>>$LOG_FILE
 validate $? "enabling mysql"
 
-systemctl start mysqld
+systemctl start mysqld &>>$LOG_FILE
 validate $? "starting mysql"
 
 mysql -h 172.31.47.10 -u root -p ExpenseApp@1 -e 'show databes;'
 if [ $? -ne 0 ]
 then 
-  echo "mysql root password is not setup, setting up now"
-  mysql_secure_installation --set-root-pass ExpenseApp@1
+  echo "mysql root password is not setup, setting up now" | tee -a $LOG_FILE
+  mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
   validate $? "setting up root password"
 else 
-   echo -e "Already setup $Y skipping $N"
+   echo -e "Already setup $Y skipping $N" | tee -a $LOG_FILE
    validate $? "setting up root password"
 fi
