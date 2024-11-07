@@ -9,7 +9,7 @@ mkdir -p $LOG_FOLDER
 userid=$(id -u)
 if [ $userid -ne 0 ]
 then 
-  echo -e "$R please run through root privileges $N"
+  echo -e " $R please run through root privileges $N"
   exit 1
 fi
 
@@ -21,9 +21,9 @@ Y="\e[33m"
 validate (){
     if [ $1 -ne 0 ]
     then 
-       echo -e "$R $2 is  failed.. $N check it " | tee -a $LOG_FILE
+       echo -e " $2 is $R failed.. $N check it " | tee -a $LOG_FILE
     else 
-       echo -e " $G $2 is  success $N" | tee -a $LOG_FILE
+       echo -e "  $2 is $G success $N" | tee -a $LOG_FILE
     fi
 }
 
@@ -38,7 +38,7 @@ validate $? "enable nodejs : 20"
 dnf install nodejs -y &>>$LOG_FILE
 validate $? "installing nodejs"
 
-id expense
+id expense &>>$LOG_FILE
 if [ $? -ne 0 ]
 then 
    echo "user expense doesnt exit create user" &>>$LOG_FILE
