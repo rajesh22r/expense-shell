@@ -21,9 +21,9 @@ Y="\e[33m"
 validate (){
     if [ $1 -ne 0 ]
     then 
-       echo -e "$R $2 is  failed.. $N check it " | tee -a $LOG_FILE
+       echo -e "$2 is $R failed.. $N check it " | tee -a $LOG_FILE
     else 
-       echo -e " $G $2 is  success $N" | tee -a $LOG_FILE
+       echo -e " $2 is $G success $N" | tee -a $LOG_FILE
     fi
 }
 
