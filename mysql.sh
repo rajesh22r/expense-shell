@@ -39,7 +39,7 @@ validate $? "enabling mysql"
 systemctl start mysqld &>>$LOG_FILE
 validate $? "starting mysql"
 
-mysql -h mysql.hraje.online -uroot -pExpenseApp@1 -e 'show databes;'
+mysql -h mysql.hraje.online -uroot -pExpenseApp@1 
 if [ $? -ne 0 ]
 then 
   echo "mysql root password is not setup, setting up now" | tee -a $LOG_FILE
